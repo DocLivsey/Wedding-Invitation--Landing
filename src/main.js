@@ -1,10 +1,14 @@
-import { getType } from './utils/router';
-import { configs } from './config';
-import { renderHero } from './components/hero.js';
+import { getType } from "./utils/router.js";
+import { configs } from "./config/index.js";
+import { renderLandingPage } from "./components/landing.js";
+import { initCountdown, initRSVPForm } from "./utils/interactions.js";
 
 const type = getType();
-const config = configs[type];
+const config = configs[type] ?? configs.default;
+const app = document.querySelector("#app");
 
-document.querySelector('#app').innerHTML = `
-  ${renderHero(config)}
-`;
+if (app) {
+  app.innerHTML = renderLandingPage(config);
+  initCountdown();
+  initRSVPForm();
+}
