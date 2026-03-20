@@ -1,2 +1,4 @@
-const requestParams = new URLSearchParams(window.location.search);
-const type = requestParams.get("type") || "default";
+export function getType() {
+    const requestParams = new URLSearchParams(window.location.search);
+    return requestParams.get("type") || "default";
+}
