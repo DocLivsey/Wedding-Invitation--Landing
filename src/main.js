@@ -1,5 +1,5 @@
 import { getType } from "./utils/router.js";
-import { configs } from "./config/index.js";
+import { configs } from "./config/type/index.js";
 import { renderLandingPage } from "./components/landing.js";
 import { initCountdown, initRSVPForm } from "./utils/interactions.js";
 

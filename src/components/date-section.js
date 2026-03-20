@@ -1,11 +1,11 @@
-export function renderDateSection() {
+export function renderDateSection(config) {
   const days = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"];
-  const dates = [21, 22, 23, 24, 25, 26, 27];
+  const dates = [10, 11, 12, 13, 14, 15, 16];
 
   return `
     <section class="section section--cream section--bordered date-section">
       <div class="container">
-        <h2 class="section-title">Сентябрь 2026</h2>
+        <h2 class="section-title">${config.weddingDate.month.string} ${config.weddingDate.year}</h2>
         <p class="section-subtitle">Наше «навсегда» начнется...</p>
 
         <div class="calendar">
@@ -13,16 +13,16 @@ export function renderDateSection() {
           ${dates
             .map(
               (date) => `
-              <div class="calendar__day ${date === 25 ? "calendar__day--special" : ""}">
+              <div class="calendar__day ${date === config.weddingDate.day ? "calendar__day--special" : ""}">
                 <span>${date}</span>
-                ${date === 25 ? '<span class="calendar__heart">❤</span>' : ""}
+                ${date === config.weddingDate.day ? '<span class="calendar__heart">❤</span>' : ""}
               </div>
             `,
             )
             .join("")}
         </div>
 
-        <p class="date-section__note">Не стройте планы на осень - мы ждем вас на нашей свадьбе!</p>
+        <p class="date-section__note">Не стройте планы на ${config.weddingDate.month.string} - мы ждем вас на нашей свадьбе!</p>
 
         <div class="countdown" data-countdown>
           <div class="countdown__cell"><span data-days>0</span><small>дней</small></div>

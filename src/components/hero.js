@@ -6,11 +6,11 @@ export function renderHero(config) {
         <p class="eyebrow">Приглашение на свадьбу</p>
         <h1 class="hero__title">${config.coupleNames}</h1>
         <div class="hero__date">
-          <span>25</span>
+          <span>${String(config.weddingDate.day).padStart(2, '0')}</span>
           <span class="heart">❤</span>
-          <span>09</span>
+          <span>${String(config.weddingDate.month.numeric).padStart(2, '0')}</span>
           <span class="heart">❤</span>
-          <span>2026</span>
+          <span>${config.weddingDate.year}</span>
         </div>
       </div>
     </section>

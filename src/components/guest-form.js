@@ -1,4 +1,4 @@
-export function renderRSVPForm() {
+export function renderGuestForm() {
   return `
     <section class="section section--cream rsvp">
       <div class="container container--narrow">

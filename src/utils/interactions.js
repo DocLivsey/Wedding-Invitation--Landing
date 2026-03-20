@@ -18,7 +18,7 @@ export function initCountdown() {
   const container = document.querySelector("[data-countdown]");
   if (!container) return;
 
-  const targetDate = new Date("2026-09-25T14:00:00").getTime();
+  const targetDate = new Date("2026-08-13T17:00:00").getTime();
   const daysEl = container.querySelector("[data-days]");
   const hoursEl = container.querySelector("[data-hours]");
   const minutesEl = container.querySelector("[data-minutes]");
