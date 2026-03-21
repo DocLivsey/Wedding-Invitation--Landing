@@ -1,10 +1,10 @@
 export function renderGuestForm() {
   return `
-    <section class="section section--cream rsvp">
+    <section class="section section--cream rsvp" data-parallax-section>
       <div class="container container--narrow">
-        <h2 class="section-title">Анкета гостя</h2>
-        <div class="divider"></div>
-        <p class="rsvp__description">
+        <h2 class="section-title" data-anim-fade-up>Анкета гостя</h2>
+        <div class="divider" data-anim-fade-up style="--anim-delay:100ms;"></div>
+        <p class="rsvp__description" data-anim-fade-up style="--anim-delay:220ms;">
           Пожалуйста, подтвердите свое присутствие до 1 июня 2026 года, чтобы мы могли планировать наше
           торжество наилучшим образом.
         </p>
@@ -14,7 +14,7 @@ export function renderGuestForm() {
           <p>Ваша анкета успешно отправлена</p>
         </div>
 
-        <form class="rsvp-form" data-rsvp-form>
+        <form class="rsvp-form" data-rsvp-form data-anim-fade-up style="--anim-delay:340ms;">
           <div class="rsvp-field rsvp-field--text">
             <input id="rsvp-fullname" name="fullName" placeholder=" " required />
             <label for="rsvp-fullname">Ваши Фамилия и Имя</label>

@@ -47,6 +47,8 @@ export function initRSVPForm() {
   const success = document.querySelector("[data-rsvp-success]");
   if (!form || !extra || !success) return;
   let hideExtraTimer = null;
+  let submitStateTimer = null;
+  const submitButton = form.querySelector(".rsvp-form__submit");
 
   const toggleExtra = () => {
     const attendance = form.querySelector('input[name="attendance"]:checked')?.value;
@@ -70,10 +72,97 @@ export function initRSVPForm() {
   form.addEventListener("change", toggleExtra);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
+    if (submitStateTimer) {
+      window.clearTimeout(submitStateTimer);
+      submitStateTimer = null;
+    }
+    submitButton?.classList.add("is-pressed");
+    submitStateTimer = window.setTimeout(() => {
+      if (success.hidden) {
+        submitButton?.classList.remove("is-pressed");
+      }
+      submitStateTimer = null;
+    }, 1400);
     form.classList.add("is-submitting");
     form.hidden = true;
     success.hidden = false;
   });
 
   toggleExtra();
+}
+
+export function initVenuePinScale() {
+  const image = document.querySelector(".venue__image");
+  const pin = image?.querySelector(".venue__pin");
+  if (!image || !pin) return;
+
+  let scaleTimer = null;
+  pin.addEventListener("click", () => {
+    image.classList.add("is-scaled");
+    if (scaleTimer) {
+      window.clearTimeout(scaleTimer);
+    }
+    scaleTimer = window.setTimeout(() => {
+      image.classList.remove("is-scaled");
+      scaleTimer = null;
+    }, 260);
+  });
+}
+
+export function initParallaxEffects() {
+  const sections = Array.from(document.querySelectorAll(".section"));
+  const parallaxSections = sections.map((section, index) => {
+    const speed = 0.055 + (index % 3) * 0.015;
+    section.dataset.parallaxSpeed = String(speed);
+    section.classList.add("parallax-section");
+    return section;
+  });
+
+  let rafId = 0;
+  const updateParallax = () => {
+    const viewportMid = window.innerHeight * 0.5;
+    parallaxSections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const speed = Number(section.dataset.parallaxSpeed || 0.06);
+      const sectionMid = rect.top + rect.height * 0.5;
+      const distance = sectionMid - viewportMid;
+      const offset = Math.max(-28, Math.min(28, -distance * speed * 0.12));
+      section.style.setProperty("--parallax-offset", `${offset.toFixed(2)}px`);
+    });
+    rafId = 0;
+  };
+
+  const requestParallaxUpdate = () => {
+    if (rafId) return;
+    rafId = window.requestAnimationFrame(updateParallax);
+  };
+
+  requestParallaxUpdate();
+  window.addEventListener("scroll", requestParallaxUpdate, { passive: true });
+  window.addEventListener("resize", requestParallaxUpdate);
+
+  const revealTargets = [
+    ...document.querySelectorAll("[data-anim-invite-photo]"),
+    ...document.querySelectorAll("[data-anim-invite-label]"),
+    ...document.querySelectorAll("[data-anim-invite-text]"),
+    ...document.querySelectorAll("[data-anim-timeline-item]"),
+    ...document.querySelectorAll("[data-anim-dress-text]"),
+    ...document.querySelectorAll("[data-anim-dress-swatch]"),
+    ...document.querySelectorAll("[data-anim-fade-up]"),
+  ];
+
+  revealTargets.forEach((item) => item.classList.add("anim-pending"));
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("anim-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
+  );
+
+  revealTargets.forEach((item) => observer.observe(item));
 }
