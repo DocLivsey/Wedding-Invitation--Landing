@@ -1,3 +1,5 @@
+import {dateConfig} from "../config/date-section.js";
+
 function getCountdownParts(targetDate) {
   const now = Date.now();
   const diff = targetDate - now;
@@ -18,7 +20,10 @@ export function initCountdown() {
   const container = document.querySelector("[data-countdown]");
   if (!container) return;
 
-  const targetDate = new Date("2026-08-13T17:00:00").getTime();
+  const targetYear = String(dateConfig.weddingDate.year)
+  const targetMonth = String(dateConfig.weddingDate.month.numeric).padStart(2, '0')
+  const targetDay = String(dateConfig.weddingDate.day).padStart(2, '0')
+  const targetDate = new Date(`${targetYear}-${targetMonth}-${targetDay}T17:00:00`).getTime();
   const daysEl = container.querySelector("[data-days]");
   const hoursEl = container.querySelector("[data-hours]");
   const minutesEl = container.querySelector("[data-minutes]");
