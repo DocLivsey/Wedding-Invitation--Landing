@@ -377,6 +377,8 @@ body {
       center/cover no-repeat;
   display: grid;
   place-items: center;
+  transition: transform 1s ease-out, box-shadow 1s ease-out;
+  cursor: pointer;
 }
 
 .venue__pin {
@@ -387,6 +389,59 @@ body {
   place-items: center;
   font-size: 2.2rem;
   background: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: transform 1s ease, background-color 1s ease;
+}
+
+.venue__image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+}
+
+.venue__pin:hover,
+.venue__pin:focus-visible {
+  transform: scale(0.8);
+  background: #fff;
+}
+
+.venue__route-button {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  transition:
+    background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.2s ease;
+}
+
+.venue__route-button:hover,
+.venue__route-button:checked {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(198, 165, 120, 0.25);
+}
+
+.venue__route-button:active {
+  transform: translateY(1px);
+}
+
+.venue__route-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.venue__route-button:hover::before,
+.venue__route-button:active::before {
+  opacity: 1;
 }
 
 .dress-code {
@@ -504,15 +559,19 @@ body {
 .rsvp__success {
   margin-top: 2rem;
   background: #fff;
-  padding: 2rem;
+  padding: clamp(1.6rem, 2.8vw, 2.6rem);
   text-align: left;
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.06);
   font-family: "Montserrat", sans-serif;
+  backdrop-filter: blur(1px);
+  border-radius: 4px;
 }
 
 .rsvp__success {
   border-top: 4px solid var(--accent);
   text-align: center;
+  animation: rsvp-fade-in 0.65s ease both;
 }
 
 .rsvp__success h3 {
@@ -528,14 +587,40 @@ body {
   color: #777;
 }
 
-.rsvp-form label,
-.rsvp-form legend {
+.rsvp-form {
+  max-width: 560px;
+  margin-inline: auto;
+  position: relative;
+  overflow: hidden;
+  animation: rsvp-fade-up 0.7s ease both;
+}
+
+.rsvp-form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(198, 165, 120, 0.08), transparent 35%, rgba(198, 165, 120, 0.05));
+  opacity: 0;
+  transform: translateX(-12%);
+  pointer-events: none;
+  animation: rsvp-shimmer 1.8s 0.3s ease both;
+}
+
+.rsvp-field {
+  position: relative;
   display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.72rem;
+  margin-bottom: 1.5rem;
+}
+
+.rsvp-field > span,
+.rsvp-attendance legend {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 600;
+  color: #7b7b7b;
 }
 
 .rsvp-form input,
@@ -544,36 +629,226 @@ body {
   width: 100%;
   border: 0;
   border-bottom: 1px solid #d1d1d1;
-  padding: 0.85rem 0;
-  margin-bottom: 1.25rem;
+  padding: 0.92rem 0.12rem;
+  margin-bottom: 0;
   background: transparent;
   font: 400 0.92rem/1.4 "Montserrat", sans-serif;
+  color: #2c2a28;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.rsvp-form input:focus,
+.rsvp-form select:focus,
+.rsvp-form textarea:focus {
+  outline: 0;
+  border-color: var(--accent);
 }
 
 .rsvp-form textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 44px;
 }
 
-.rsvp-form fieldset {
+.rsvp-field--text {
+  position: relative;
+  padding-top: 0.35rem;
+}
+
+.rsvp-field--text > label {
+  position: absolute;
+  left: 0.12rem;
+  top: 1rem;
+  color: #7f7f7f;
+  font: 500 1.05rem/1.2 "Cormorant Garamond", serif;
+  font-style: italic;
+  pointer-events: none;
+  transform-origin: left center;
+  transition: transform 0.24s ease, top 0.24s ease, color 0.24s ease, opacity 0.24s ease;
+}
+
+.rsvp-field--text > input:focus + label,
+.rsvp-field--text > input:not(:placeholder-shown) + label,
+.rsvp-field--text > textarea:focus + label,
+.rsvp-field--text > textarea:not(:placeholder-shown) + label {
+  top: -0.22rem;
+  transform: scale(0.8);
+  color: var(--accent);
+  opacity: 0.95;
+  font-style: normal;
+}
+
+.rsvp-attendance {
   border: 0;
-  margin: 0 0 1rem;
+  margin: 0 0 1.2rem;
   padding: 0;
 }
 
 .radio-line {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
   align-items: center;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
+  font-family: "Cormorant Garamond", serif;
   text-transform: none;
   letter-spacing: 0;
   font-weight: 400;
+  color: #555;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  transition: color 0.25s ease, transform 0.2s ease;
 }
 
 .radio-line input {
-  width: auto;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-line__dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #c7c7c7;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.25s ease;
+}
+
+.radio-line__dot::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: scale(0);
+  transition: transform 0.25s ease;
+}
+
+.radio-line:hover {
+  color: #3f3f3f;
+  transform: translateX(2px);
+}
+
+.radio-line input:checked + .radio-line__dot {
+  border-color: var(--accent);
+}
+
+.radio-line input:checked + .radio-line__dot::after {
+  transform: scale(1);
+}
+
+.radio-line input:checked ~ span:last-child {
+  color: var(--accent);
+}
+
+.rsvp-form__extra {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+  transition: grid-template-rows 0.45s ease, opacity 0.35s ease, transform 0.35s ease, margin 0.35s ease;
+}
+
+.rsvp-form__extra > * {
+  min-height: 0;
+}
+
+.rsvp-form__extra[hidden],
+.rsvp-form__extra[data-collapsing="true"] {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-8px);
   margin: 0;
+}
+
+.rsvp-field--textarea {
+  margin-top: 0.2rem;
+}
+
+.rsvp-form__submit {
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  opacity: 1;
+  transition:
+    background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.2s ease-out,
+    opacity;
+}
+
+.rsvp-form__submit:hover,
+.rsvp-form__submit:checked,
+.rsvp-form__submit.is-pressed {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(198, 165, 120, 0.25);
+  opacity: 100;
+
+}
+
+.rsvp-form__submit:active {
+  transform: translateY(1px);
+}
+
+.rsvp-form__submit span {
+  position: relative;
+  z-index: 1;
+}
+
+.rsvp-form__submit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rsvp-form__submit:hover::before,
+.rsvp-form__submit:active::before,
+.rsvp-form__submit.is-pressed::before {
+  opacity: 1;
+}
+
+@keyframes rsvp-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rsvp-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rsvp-shimmer {
+  from {
+    opacity: 0;
+    transform: translateX(-12%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .contacts {
@@ -662,5 +937,114 @@ body {
   .contacts__line {
     width: 65px;
     height: 1px;
+  }
+
+  .rsvp-field--text > label {
+    font-size: 0.95rem;
+  }
+
+  .radio-line {
+    font-size: 0.98rem;
+  }
+}
+
+.parallax-section {
+  transform: translate3d(0, var(--parallax-offset, 0px), 0);
+  transition: transform 0.18s linear;
+  will-change: transform;
+}
+
+.anim-pending {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+[data-anim-invite-photo].anim-pending {
+  transform: translateY(34px) scale(0.96);
+}
+
+[data-anim-invite-photo].anim-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: var(--invite-delay, 0ms);
+}
+
+[data-anim-invite-label].anim-pending {
+  transform: translateY(18px);
+}
+
+[data-anim-invite-label].anim-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: var(--invite-delay, 0ms);
+}
+
+[data-anim-invite-text].anim-pending {
+  transform: translateY(22px);
+}
+
+[data-anim-invite-text].anim-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+  transition-delay: var(--invite-delay, 760ms);
+}
+
+[data-anim-timeline-item].anim-pending {
+  transform: translateX(-26px);
+}
+
+[data-anim-timeline-item].anim-visible {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+  transition-delay: var(--timeline-delay, 0ms);
+}
+
+[data-anim-dress-text].anim-pending {
+  transform: translateY(28px);
+}
+
+[data-anim-dress-text].anim-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+[data-anim-dress-swatch].anim-pending {
+  transform: translateX(-34px) scale(0.92);
+}
+
+[data-anim-dress-swatch].anim-visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  transition-delay: calc(360ms + var(--dress-delay, 0ms));
+}
+
+[data-anim-fade-up].anim-pending {
+  transform: translateY(20px);
+}
+
+[data-anim-fade-up].anim-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+  transition-delay: var(--anim-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-section {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .anim-pending,
+  .anim-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

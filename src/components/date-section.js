@@ -3,12 +3,12 @@ export function renderDateSection(config) {
   const dates = [10, 11, 12, 13, 14, 15, 16];
 
   return `
-    <section class="section section--cream section--bordered date-section">
+    <section class="section section--cream section--bordered date-section" data-parallax-section>
       <div class="container">
-        <h2 class="section-title">${config.weddingDate.month.string} ${config.weddingDate.year}</h2>
-        <p class="section-subtitle">Наше «навсегда» начнется...</p>
+        <h2 class="section-title" data-anim-fade-up>${config.weddingDate.month.string} ${config.weddingDate.year}</h2>
+        <p class="section-subtitle" data-anim-fade-up style="--anim-delay:120ms;">Наше «навсегда» начнется...</p>
 
-        <div class="calendar">
+        <div class="calendar" data-anim-fade-up style="--anim-delay:240ms;">
           ${days.map((day) => `<div class="calendar__weekday">${day}</div>`).join("")}
           ${dates
             .map(
@@ -24,9 +24,9 @@ export function renderDateSection(config) {
             .join("")}
         </div>
 
-        <p class="date-section__note">Не стройте планы на ${config.weddingDate.month.string} - мы ждем вас на нашей свадьбе!</p>
+        <p class="date-section__note" data-anim-fade-up style="--anim-delay:360ms;">Не стройте планы на ${config.weddingDate.month.string} - мы ждем вас на нашей свадьбе!</p>
 
-        <div class="countdown" data-countdown>
+        <div class="countdown" data-countdown data-anim-fade-up style="--anim-delay:500ms;">
           <div class="countdown__cell"><span data-days>0</span><small>дней</small></div>
           <span class="countdown__separator">:</span>
           <div class="countdown__cell"><span data-hours>00</span><small>часов</small></div>

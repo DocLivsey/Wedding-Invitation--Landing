@@ -7,15 +7,15 @@ const events = [
 
 export function renderSchedule() {
   return `
-    <section class="section section--white schedule">
+    <section class="section section--white schedule" data-parallax-section>
       <div class="container container--narrow">
         <h2 class="section-title">Тайминг дня</h2>
         <div class="divider"></div>
         <div class="timeline">
           ${events
             .map(
-              (event) => `
-              <div class="timeline__item">
+              (event, index) => `
+              <div class="timeline__item" data-anim-timeline-item style="--timeline-delay: ${index * 140}ms;">
                 <div class="timeline__icon">${event.icon}</div>
                 <div class="timeline__time">${event.time}</div>
                 <h3 class="timeline__title">${event.title}</h3>
