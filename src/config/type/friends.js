@@ -9,15 +9,16 @@ import {renderGuestForm} from "/src/components/guest-form.js";
 import {renderContacts} from "/src/components/contacts.js";
 import {heroConfig} from "/src/config/hero.js";
 import {invitiationConfig} from "/src/config/invitation.js";
-import {contactsConfig} from "/src/config/contacts.js";
 import {dateConfig} from "../date-section.js";
+import {venueConfig} from "../venue.js";
+import {contactsConfig} from "/src/config/contacts.js";
 
 export const friends = [
   renderHero(heroConfig),
   renderInvitation(invitiationConfig),
   renderDateSection(dateConfig),
   renderSchedule(),
-  renderVenue(),
+  renderVenue(venueConfig),
   renderDressCode(),
   renderWishes(),
   renderGuestForm(),

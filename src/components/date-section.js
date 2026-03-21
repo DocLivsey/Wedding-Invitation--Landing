@@ -13,8 +13,10 @@ export function renderDateSection(config) {
           ${dates
             .map(
               (date) => `
-              <div class="calendar__day ${date === config.weddingDate.day ? "calendar__day--special" : ""}">
-                <span>${date}</span>
+              <div class="calendar__day">
+                <span class="${date === config.weddingDate.day ? "calendar__day--special" : ""}">
+                  ${date}
+                </span>
                 ${date === config.weddingDate.day ? '<span class="calendar__heart">❤</span>' : ""}
               </div>
             `,
