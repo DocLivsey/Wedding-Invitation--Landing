@@ -46,15 +46,31 @@ export function initRSVPForm() {
   const extra = document.querySelector("[data-rsvp-extra]");
   const success = document.querySelector("[data-rsvp-success]");
   if (!form || !extra || !success) return;
+  let hideExtraTimer = null;
 
   const toggleExtra = () => {
     const attendance = form.querySelector('input[name="attendance"]:checked')?.value;
-    extra.hidden = attendance !== "yes";
+    if (hideExtraTimer) {
+      window.clearTimeout(hideExtraTimer);
+      hideExtraTimer = null;
+    }
+    if (attendance === "yes") {
+      extra.hidden = false;
+      return;
+    }
+    // Wait for CSS transition before hiding content semantically.
+    extra.setAttribute("data-collapsing", "true");
+    hideExtraTimer = window.setTimeout(() => {
+      extra.hidden = true;
+      extra.removeAttribute("data-collapsing");
+      hideExtraTimer = null;
+    }, 350);
   };
 
   form.addEventListener("change", toggleExtra);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
+    form.classList.add("is-submitting");
     form.hidden = true;
     success.hidden = false;
   });

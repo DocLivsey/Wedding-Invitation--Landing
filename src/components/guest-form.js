@@ -15,19 +15,27 @@ export function renderGuestForm() {
         </div>
 
         <form class="rsvp-form" data-rsvp-form>
-          <label>
-            <span>Ваши Фамилия и Имя</span>
-            <input name="fullName" placeholder="Иванов Иван" required />
-          </label>
+          <div class="rsvp-field rsvp-field--text">
+            <input id="rsvp-fullname" name="fullName" placeholder=" " required />
+            <label for="rsvp-fullname">Ваши Фамилия и Имя</label>
+          </div>
 
-          <fieldset>
+          <fieldset class="rsvp-attendance">
             <legend>Присутствие</legend>
-            <label class="radio-line"><input type="radio" name="attendance" value="yes" checked /> Я приду с удовольствием</label>
-            <label class="radio-line"><input type="radio" name="attendance" value="no" /> К сожалению, не смогу быть</label>
+            <label class="radio-line">
+              <input type="radio" name="attendance" value="yes" checked />
+              <span class="radio-line__dot" aria-hidden="true"></span>
+              <span>Я приду с удовольствием</span>
+            </label>
+            <label class="radio-line">
+              <input type="radio" name="attendance" value="no" />
+              <span class="radio-line__dot" aria-hidden="true"></span>
+              <span>К сожалению, не смогу быть</span>
+            </label>
           </fieldset>
 
           <div class="rsvp-form__extra" data-rsvp-extra>
-            <label>
+            <label class="rsvp-field">
               <span>Сколько человек будет с вами?</span>
               <select name="peopleCount">
                 <option value="1">Только я</option>
@@ -38,13 +46,15 @@ export function renderGuestForm() {
               </select>
             </label>
 
-            <label>
-              <span>Имена ваших спутников (муж/жена, дети)</span>
-              <textarea name="guestNames" placeholder="Например: Мария (жена), Саша (сын, 5 лет)"></textarea>
-            </label>
+            <div class="rsvp-field rsvp-field--text rsvp-field--textarea">
+              <textarea id="rsvp-guests" name="guestNames" placeholder=" "></textarea>
+              <label for="rsvp-guests">Имена ваших спутников (муж/жена, дети)</label>
+            </div>
           </div>
 
-          <button type="submit" class="button button--block">Отправить ответ</button>
+          <button type="submit" class="button button--block rsvp-form__submit">
+            <span>Отправить ответ</span>
+          </button>
         </form>
       </div>
     </section>
