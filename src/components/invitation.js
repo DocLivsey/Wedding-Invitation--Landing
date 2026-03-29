@@ -1,6 +1,9 @@
 export function renderInvitation(config) {
   return `
     <section class="section section--white invitation" data-parallax-section data-anim-invitation>
+<!--      <div class="absolute inset-0 z-0 opacity-40">-->
+<!--        <img src="../../public/assets/background/classic_wedding_background.jpeg" alt="" class="w-full h-full object-cover" />-->
+<!--      </div>-->
       <div class="container invitation__container">
         <div class="invitation__photos">
           <div class="person-card person-card--left" data-anim-invite-photo style="--invite-delay: 0ms;">

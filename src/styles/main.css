@@ -47,7 +47,8 @@ body {
 }
 
 .section--white {
-  background: #fff;
+  background: url("../../public/assets/background/classic_wedding_background.jpeg")
+    no-repeat center center fixed;
 }
 
 .section--bordered {
@@ -130,7 +131,7 @@ body {
   background:
     linear-gradient(rgba(249, 247, 243, 0.2), rgba(249, 247, 243, 0.5)),
     url("../../public/assets/background/wedding_hero_image.jpeg")
-      center/cover no-repeat;
+      center/auto 100vh no-repeat;
 }
 
 .hero__content {
@@ -139,6 +140,7 @@ body {
 }
 
 .hero__title {
+  font-style: italic;
   margin: 0 0 1rem;
   font-weight: 500;
   letter-spacing: 0.04em;
@@ -524,7 +526,7 @@ body {
 
 .wishes__text {
   color: #5d5d5d;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-style: italic;
 }
 
