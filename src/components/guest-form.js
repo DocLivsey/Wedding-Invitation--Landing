@@ -5,7 +5,7 @@ export function renderGuestForm() {
         <h2 class="section-title" data-anim-fade-up>Анкета гостя</h2>
         <div class="divider" data-anim-fade-up style="--anim-delay:100ms;"></div>
         <p class="rsvp__description" data-anim-fade-up style="--anim-delay:220ms;">
-          Пожалуйста, подтвердите свое присутствие до 1 июня 2026 года, чтобы мы могли планировать наше
+          Пожалуйста, подтвердите свое присутствие, чтобы мы могли планировать наше
           торжество наилучшим образом.
         </p>
 
