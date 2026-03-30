@@ -12,3 +12,5 @@ export const WEDDING_DATE = {
     },
     year: 2026,
 }
+
+export const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxcet5q6yl4KfR38h9w9to2TFpFQKT0jN9nk9env7mhGDXUFnwjMy6TtZZOtpQlR3U/exec'

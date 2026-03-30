@@ -1,4 +1,5 @@
 import {dateConfig} from "../config/date-section.js";
+import {sendSurvey} from "../services/google-docs-api.js";
 
 function getCountdownParts(targetDate) {
   const now = Date.now();
@@ -70,7 +71,7 @@ export function initRSVPForm() {
   };
 
   form.addEventListener("change", toggleExtra);
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (submitStateTimer) {
       window.clearTimeout(submitStateTimer);
@@ -86,6 +87,8 @@ export function initRSVPForm() {
     form.classList.add("is-submitting");
     form.hidden = true;
     success.hidden = false;
+
+    await sendSurvey(event);
   });
 
   toggleExtra();
